@@ -1,5 +1,4 @@
-const TextToSVG = require('text-to-svg')
-const svgToImg = require('svg-to-img')
+const textToImage = require('./textToImage')
 const request = require('./request')
 
 async function getHitokoto() {
@@ -7,23 +6,13 @@ async function getHitokoto() {
     console.log(res)
     return JSON.parse(res)
 }
-let fontToSvg = (() => {
-    const textToSVG = TextToSVG.loadSync('fonts/SourceHanSerifCN-Medium.otf')
-    return async function() {
-        const attributes = { fill: 'red', stroke: 'yellow' }
-        const options = { x: 0, y: 0, fontSize: 32, anchor: 'top', attributes: attributes }
-        let res = await getHitokoto()
-        let text = res.hitokoto
-        const svg = textToSVG.getSVG(text, options)
-        return svg
-    }
-})()
-let svgToImgFunc = async function(svg) {
-    const image = await svgToImg.from(svg).toPng({ background: '#000000' })
+
+let textToImg = async function(option) {
+    const image = await textToImage.convertImg(option)
     return image
 }
 
 module.exports = {
-    fontToSvg,
-    svgToImgFunc
+    textToImg,
+    getHitokoto
 }

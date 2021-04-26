@@ -4,10 +4,22 @@ const fs = require('fs')
 const port = 3000
 const util = require('./util/index')
 app.get('/', async function(req, res) {
+    let query = req.query
     res.writeHead(200, {
         'Content-Type': 'image/png'
     })
-    res.end(await util.svgToImgFunc(await util.fontToSvg()))
+    res.end(
+        await util.textToImg({
+            text: (await util.getHitokoto()).hitokoto,
+            mode: query.mode,
+            colors: query.color,
+            shadowColor: query.shadowColor,
+            shadowOffsetX: query.shadowOffsetX,
+            shadowOffsetY: query.shadowOffsetX,
+            fontSize: query.fontSize,
+            wordLine: query.wordLine
+        })
+    )
 })
 
 app.listen(port, () => {
