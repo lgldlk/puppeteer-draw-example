@@ -37,7 +37,20 @@ exports.toImgData = async(options) => {
             fontSize = Number(options.fontSize || 32),
             fontFamily = options.fontFamily,
             wordLine = Number(options.wordLine),
-            lineHeight = fontSize + fontSize / fontConfig.baseLine
+            lineHeight = fontSize + fontSize / fontConfig.baseLine,
+            getPixelRatio = function(context) {
+                var backingStore =
+                    context.backingStorePixelRatio ||
+                    context.webkitBackingStorePixelRatio ||
+                    context.mozBackingStorePixelRatio ||
+                    context.msBackingStorePixelRatio ||
+                    context.oBackingStorePixelRatio ||
+                    context.backingStorePixelRatio ||
+                    1
+                return (window.devicePixelRatio || 1) / backingStore
+            }
+        var ratio = getPixelRatio(ctx)
+        ctx.scale(ratio, ratio)
         canvas.width = fontSize * (wordLine ? wordLine : font.length)
         canvas.height = wordLine ?
             fontSize / fontConfig.baseLine + lineHeight * Math.ceil(font.length / wordLine) :
@@ -51,7 +64,7 @@ exports.toImgData = async(options) => {
             for (let i = 0; i < options.colors.length; i++) {
                 gradient.addColorStop(getColorX(i, options.colors), options.colors[i])
             }
-        } else if (options.colors instanceof String) {
+        } else if (typeof options.colors == 'string') {
             gradient.addColorStop(0, options.colors)
         } else {
             gradient.addColorStop(0, 'rgba(241,158,194,1)')
