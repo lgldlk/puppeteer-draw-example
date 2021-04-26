@@ -23,6 +23,10 @@ exports.stringifyFunction = (func, ...argsArray) => {
 }
 
 exports.toImgData = async(options) => {
+    fontConfig = {
+        baseLine: 5
+    }
+
     function getColorX(i, colors) {
         return (i / (colors.length - 1)).toFixed(2)
     }
@@ -33,9 +37,11 @@ exports.toImgData = async(options) => {
             fontSize = Number(options.fontSize || 32),
             fontFamily = options.fontFamily,
             wordLine = Number(options.wordLine),
-            lineHeight = fontSize + fontSize / 5
+            lineHeight = fontSize + fontSize / fontConfig.baseLine
         canvas.width = fontSize * (wordLine ? wordLine : font.length)
-        canvas.height = wordLine ? fontSize / 5 + lineHeight * Math.ceil(font.length / wordLine) : lineHeight
+        canvas.height = wordLine ?
+            fontSize / fontConfig.baseLine + lineHeight * Math.ceil(font.length / wordLine) :
+            lineHeight
 
         gradient = ctx.createLinearGradient(0, 0, canvas.width, 0)
         ctx.shadowColor = options.shadowColor || ''

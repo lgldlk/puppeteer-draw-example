@@ -10,7 +10,7 @@ app.get('/', async function(req, res) {
     })
     res.end(
         await util.textToImg({
-            text: (await util.getHitokoto()).hitokoto,
+            text: await util.getHitokoto({ c: query.c }, query.showAuthor),
             mode: query.mode,
             colors: query.color,
             shadowColor: query.shadowColor,

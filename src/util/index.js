@@ -1,10 +1,10 @@
 const textToImage = require('./textToImage')
 const request = require('./request')
 
-async function getHitokoto() {
-    let res = await request.get('https://v1.hitokoto.cn/')
-    console.log(res)
-    return JSON.parse(res)
+async function getHitokoto(parma, showAuthor) {
+    let res = await request.get('https://v1.hitokoto.cn/', parma)
+    let result = JSON.parse(res)
+    return showAuthor ? result.hitokoto + '——' + result.from_who : result.hitokoto
 }
 
 let textToImg = async function(option) {
