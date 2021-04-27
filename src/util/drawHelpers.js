@@ -1,8 +1,3 @@
-const { query } = require('express')
-
-exports.getFileTypeFromPath = (path) => {
-    return path.toLowerCase().replace(new RegExp('jpg', 'g'), 'jpeg').split('.').reverse()[0]
-}
 exports.stringifyFunction = (func, ...argsArray) => {
     // Remove istanbul coverage instruments
     const functionString = func.toString().replace(/cov_(.+?)\+\+[,;]?/g, '')
