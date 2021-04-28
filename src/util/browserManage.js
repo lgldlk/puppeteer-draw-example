@@ -14,6 +14,7 @@ class BrowserManage {
             }
         }, 5000)
     }
+
     async getBrowser() {
         return new Promise(async(resolve, reject) => {
             if (this.browserState === 'closed') {

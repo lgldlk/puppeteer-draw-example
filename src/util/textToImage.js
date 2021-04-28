@@ -10,13 +10,7 @@ const convertImg = async(passedOptions) => {
     const base64 = await page.evaluate(drawHelpers.stringifyFunction(drawHelpers.toImgData, passedOptions))
     browserManage.scheduleBrowserForDestruction()
     const buffer = Buffer.from(base64, 'base64')
-    if (passedOptions.encoding === 'base64') {
-        return base64
-    }
-    if (!passedOptions.encoding) {
-        return buffer
-    }
-    return buffer.toString(passedOptions.encoding)
+    return buffer
 }
 
 module.exports = {

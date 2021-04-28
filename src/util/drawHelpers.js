@@ -1,6 +1,6 @@
 exports.stringifyFunction = (func, ...argsArray) => {
     // Remove istanbul coverage instruments
-    const functionString = func.toString().replace(/cov_(.+?)\+\+[,;]?/g, '')
+    const functionString = func.toString()
     const args = []
     for (const argument of argsArray) {
         switch (typeof argument) {

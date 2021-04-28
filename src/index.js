@@ -1,12 +1,13 @@
 var express = require('express')
 var app = express()
 const fs = require('fs')
-const port = 3000
+const port = 8091
 const util = require('./util/index')
 app.get('/', async function(req, res) {
     let query = req.query
     res.writeHead(200, {
-        'Content-Type': 'image/png'
+        'Content-Type': 'image/png',
+        'cache-control': 'no-cache, no-store'
     })
     res.end(
         await util.textToImg({
