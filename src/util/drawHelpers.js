@@ -1,29 +1,12 @@
-exports.stringifyFunction = (func, ...argsArray) => {
-    // Remove istanbul coverage instruments
-    const functionString = func.toString()
-    const args = []
-    for (const argument of argsArray) {
-        switch (typeof argument) {
-            case 'string':
-                args.push('`' + argument + '`')
-                break
-            case 'object':
-                args.push(JSON.stringify(argument))
-                break
-            default:
-                args.push(argument)
-        }
-    }
-    return `(${functionString})(${args.join(',')})`
-}
-
 exports.toImgData = async(options) => {
-    fontConfig = {
+    let fontConfig = {
         baseLine: 5
     }
 
     function getColorX(i, colors) {
-        return (i / (colors.length - 1)).toFixed(2)
+        if (colors instanceof Array) {
+            return (i / (colors.length - 1)).toFixed(2)
+        }
     }
     return new Promise((resolve, reject) => {
         let canvas = document.createElement('canvas')
@@ -90,7 +73,7 @@ exports.toImgData = async(options) => {
         }
         ctx.restore()
         const dataURI = canvas.toDataURL('image/png')
-        const base64 = dataURI.substr(`data:image/png;base64,`.length)
+        const base64 = dataURI.substr(22)
         canvas = ctx = null
         resolve(base64)
     })
